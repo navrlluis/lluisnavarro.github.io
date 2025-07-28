@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lluis Navarro - Economist & Mathematician</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            color: #333;
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            background: rgba(0,0,0,0.05);
+        }
+
+        .nav-links a:hover {
+            background: #000;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 100px;
+        }
+
+        section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #f8f8f8 0%, #fff 100%);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #555;
+        }
+
+        .contact-info {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .contact-info a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Experience Cards */
+        .experience-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .experience-card {
+            border: 1px solid #eee;
+            padding: 2rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .experience-card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .company {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .role {
+            color: #666;
+            font-style: italic;
+        }
+
+        .date-location {
+            text-align: right;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .achievements {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .achievements li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .achievements li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #000;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            border: 1px solid #eee;
+            padding: 1.5rem;
+            border-radius: 20px;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .skill-category h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.3rem 0;
+            color: #555;
+        }
+
+        /* Forms Section */
+        .forms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .form-card {
+            border: 1px solid #eee;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .form-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-card h4 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .form-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            background: #000;
+            color: #fff;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background: #333;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        /* CTA Button */
+        .btn-cta {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: #fff;
+            padding: 1.5rem 3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s ease;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            background: linear-gradient(135deg, #333 0%, #000 100%);
+        }
+
+        .btn-cta:hover::before {
+            left: 100%;
+        }
+
+        /* Footer */
+        footer {
+            background: #f8f9fa;
+            color: #333;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid #eee;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .experience-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .date-location {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Lluis Navarro</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#forms">Connect</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Lluis Navarro Rico</h1>
+                <p class="hero-subtitle">Economist × Mathematician × Tech Enthusiast</p>
+                <p class="hero-description">
+                    Double degree graduate in Economics and Business Administration from Aberystwyth University, 
+                    currently pursuing a Master's in Quantitative Economics. Passionate about blockchain technology, 
+                    financial analysis, and the intersection of mathematics and digital innovation.
+                </p>
+                <div class="contact-info">
+                    <p>📍 Alicante, Spain | 📞 673369138 | 📧 <a href="mailto:lluis.uk@gmail.com">lluis.uk@gmail.com</a> | 
+                    💼 <a href="https://linkedin.com/in/lluis-econ" target="_blank">LinkedIn</a></p>
+                </div>
+                
+                <div class="cta-section" style="margin-top: 3rem;">
+                    <a href="mailto:lluis.uk@gmail.com?subject=Business Opportunity - Let's Work Together" class="btn-cta">
+                        🚀 Ready to Work Together?
+                    </a>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                        Available for consulting, partnerships, and innovative projects
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <h2>About Me</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: #555;">
+                    I'm a quantitative economist with a strong mathematical background and a passion for emerging technologies. 
+                    My experience spans from financial consulting and marketing operations to chess instruction and digital marketing. 
+                    I combine analytical rigor with creative problem-solving, always seeking innovative solutions at the intersection 
+                    of economics, mathematics, and technology.
+                </p>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience">
+            <div class="container">
+                <h2>Professional Experience</h2>
+                <div class="experience-grid">
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <div>
+                                <div class="company">AllorNothing Burger</div>
+                                <div class="role">Marketing Operations</div>
+                            </div>
+                            <div class="date-location">
+                                May 2025 - Present<br>
+                                Alicante, España
+                            </div>
+                        </div>
+                        <ul class="achievements">
+                            <li>Secured exclusive partnerships with 3 local organizers, positioning brand to 300+ target consumers</li>
+                            <li>Implemented tastings and exclusive promotions, achieving 25% conversion rate from attendees to recurring customers</li>
+                            <li>Generated measurable direct sales through QR coupons with proven ROI in initial campaigns</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <div>
+                                <div class="company">NobleMarron Cantera de Mármol</div>
+                                <div class="role">Financial Consultant</div>
+                            </div>
+                            <div class="date-location">
+                                Nov 2023 - Apr 2024<br>
+                                Jumilla, España
+                            </div>
+                        </div>
+                        <ul class="achievements">
+                            <li>Developed comprehensive 64-page financial health report covering complete company analysis</li>
+                            <li>Conducted EBITDA analysis with 3-5 year scenario modeling including cash flows and risk assessment</li>
+                            <li>Designed CSR strategy aligned with UN Sustainable Development Goals</li>
+                            <li>Created high-impact commercial materials for investor and strategic partner acquisition</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <div>
+                                <div class="company">Enric Valor</div>
+                                <div class="role">Chess Instructor (Online & In-Person)</div>
+                            </div>
+                            <div class="date-location">
+                                Oct 2018 - Jun 2022<br>
+                                Alicante, España
+                            </div>
+                        </div>
+                        <ul class="achievements">
+                            <li>Built engaged audience for chess classes, resulting in notable increase in demand and participation</li>
+                            <li>Achieved 80% student retention rate through personalized instruction for diverse age groups</li>
+                            <li>Organized tournaments with 50-100 participants, fostering competitive learning environment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="container">
+                <h2>Skills & Expertise</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>Technical Skills</h4>
+                        <ul class="skill-list">
+                            <li>Financial Analysis & Modeling</li>
+                            <li>EBITDA & Cash Flow Analysis</li>
+                            <li>Statistical Analysis</li>
+                            <li>Data Visualization</li>
+                            <li>Microsoft Office Suite</li>
+                            <li>Digital Marketing</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Areas of Interest</h4>
+                        <ul class="skill-list">
+                            <li>Blockchain Technology</li>
+                            <li>Quantitative Economics</li>
+                            <li>Fintech Innovation</li>
+                            <li>Sustainable Development</li>
+                            <li>Market Analysis</li>
+                            <li>AI & Automation</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Languages</h4>
+                        <ul class="skill-list">
+                            <li>Spanish (Native)</li>
+                            <li>Catalan (Native)</li>
+                            <li>English (High Proficiency)</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Certifications</h4>
+                        <ul class="skill-list">
+                            <li>Microsoft Office Certified</li>
+                            <li>Google Digital Marketing</li>
+                            <li>META Big Data Certificate</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Forms Section -->
+        <section id="forms">
+            <div class="container">
+                <h2>Let's Connect</h2>
+                <div class="forms-grid">
+                    <div class="form-card">
+                        <h4>🤝 Collaboration</h4>
+                        <p>Interested in working together on blockchain, fintech, or economic analysis projects?</p>
+                        <a href="mailto:lluis.uk@gmail.com?subject=Collaboration Opportunity" class="btn">Get in Touch</a>
+                    </div>
+                    <div class="form-card">
+                        <h4>💼 Professional Opportunities</h4>
+                        <p>Looking for a quantitative economist with tech passion? Let's discuss opportunities.</p>
+                        <a href="mailto:lluis.uk@gmail.com?subject=Job Opportunity" class="btn">Contact Me</a>
+                    </div>
+                    <div class="form-card">
+                        <h4>☕ Coffee Chat</h4>
+                        <p>Want to discuss economics, blockchain, or just have a friendly conversation?</p>
+                        <a href="mailto:lluis.uk@gmail.com?subject=Coffee Chat Request" class="btn">Let's Meet</a>
+                    </div>
+                    <div class="form-card">
+                        <h4>🎯 Consulting</h4>
+                        <p>Need financial analysis, market research, or strategic planning expertise?</p>
+                        <a href="mailto:lluis.uk@gmail.com?subject=Consulting Inquiry" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Lluis Navarro Rico. All rights reserved.</p>
+            <p>Economist × Mathematician × Tech Enthusiast</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(15px)';
+            } else {
+                header.style.background = '#fff';
+                header.style.backdropFilter = 'blur(10px)';
+            }
+        });
+    </script>
+</body>
+</html>
