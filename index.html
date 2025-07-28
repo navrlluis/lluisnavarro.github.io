@@ -1,148 +1,890 @@
-# Estructura para GitHub Pages Multiidioma
-
-## Estructura de carpetas recomendada:
-
-```
-tu-repositorio/
-├── index.html          # Página de redirección principal
-├── _config.yml         # Configuración de Jekyll (opcional)
-├── es/
-│   ├── index.html      # Página principal en español
-│   ├── about.html      # Otras páginas en español
-│   └── ...
-├── en/
-│   ├── index.html      # Página principal en inglés
-│   ├── about.html      # Otras páginas en inglés
-│   └── ...
-└── assets/
-    ├── css/
-    ├── js/
-    └── images/
-```
-
-## Pasos para configurar:
-
-### 1. Crear el repositorio
-- Ve a GitHub y crea un nuevo repositorio
-- Nombre sugerido: `tu-usuario.github.io` (para sitio principal) o `nombre-proyecto` (para sitio de proyecto)
-
-### 2. Configurar GitHub Pages
-- Ve a Settings > Pages
-- En "Source" selecciona "Deploy from a branch"
-- Selecciona "main" branch y "/ (root)"
-
-### 3. Crear index.html principal (redirección)
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirigiendo...</title>
-    <script>
-        // Detectar idioma del navegador
-        const userLang = navigator.language || navigator.userLanguage;
-        if (userLang.startsWith('en')) {
-            window.location.href = '/en/';
-        } else {
-            window.location.href = '/es/';
+    <title>Lluis Navarro - Economista y Matemático</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-    </script>
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            color: #333;
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .nav-center {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        .nav-center a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            background: rgba(0,0,0,0.05);
+        }
+
+        .nav-center a:hover {
+            background: #000;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Flag Selector */
+        .flag-selector {
+            position: relative;
+        }
+
+        .flag-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.8rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            background: rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flag-toggle:hover {
+            background: rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .current-flag {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            overflow: hidden;
+        }
+
+        .flag-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0,0,0,0.05);
+            min-width: 180px;
+            overflow: hidden;
+        }
+
+        .flag-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .flag-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .flag-option:hover {
+            background: rgba(0,0,0,0.05);
+            transform: translateX(5px);
+        }
+
+        .flag-option:first-child:hover {
+            border-radius: 15px 15px 0 0;
+        }
+
+        .flag-option:last-child:hover {
+            border-radius: 0 0 15px 15px;
+        }
+
+        .flag-emoji {
+            font-size: 18px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.02);
+        }
+
+        .flag-name {
+            font-weight: 500;
+        }
+
+        /* Shadow Dissipation Effect */
+        .shadow-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            z-index: 999;
+            backdrop-filter: blur(2px);
+        }
+
+        .shadow-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 100px;
+        }
+
+        section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 0 4rem 0;
+            background: linear-gradient(135deg, #f8f8f8 0%, #fff 100%);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: #555;
+        }
+
+        .contact-info {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 4rem;
+        }
+
+        .contact-info a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* About Section - Reduced padding */
+        #about {
+            padding: 2.5rem 0;
+        }
+
+        /* Experience Cards */
+        .experience-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .experience-card {
+            border: 1px solid #eee;
+            padding: 2rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .experience-card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .company {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .role {
+            color: #666;
+            font-style: italic;
+        }
+
+        .date-location {
+            text-align: right;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .achievements {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .achievements li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .achievements li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #000;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category.certifications {
+            grid-column: 1 / -1;
+        }
+
+        .skill-category {
+            border: 1px solid #eee;
+            padding: 1.5rem;
+            border-radius: 20px;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .skill-category h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.3rem 0;
+            color: #555;
+        }
+
+        /* Forms Section */
+        .forms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .form-card {
+            border: 1px solid #eee;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .form-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-card h4 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .form-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            background: #000;
+            color: #fff;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background: #333;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        /* CTA Button */
+        .btn-cta {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: #fff;
+            padding: 1.5rem 3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s ease;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            background: linear-gradient(135deg, #333 0%, #000 100%);
+        }
+
+        .btn-cta:hover::before {
+            left: 100%;
+        }
+
+        /* Footer */
+        footer {
+            background: #f8f9fa;
+            color: #333;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid #eee;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-center {
+                gap: 0.5rem;
+            }
+
+            .nav-center a {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .experience-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .date-location {
+                text-align: left;
+            }
+
+            .flag-dropdown {
+                right: -20px;
+            }
+
+            /* Mobile-friendly skills grid */
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .skill-category.certifications {
+                grid-column: 1;
+            }
+
+            .skill-category.certifications .skill-list {
+                grid-template-columns: 1fr;
+            }
+
+            /* Mobile-friendly forms grid */
+            .forms-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            /* Adjust hero section for mobile */
+            .hero {
+                padding: 4rem 0 3rem 0;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+                margin: 0 auto 2rem;
+            }
+
+            .contact-info {
+                font-size: 0.9rem;
+                margin-bottom: 3rem;
+            }
+
+            .btn-cta {
+                padding: 1.2rem 2rem;
+                font-size: 1rem;
+            }
+
+            /* Better mobile navigation */
+            .nav-center {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .nav-center a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+            }
+
+            .experience-card,
+            .skill-category,
+            .form-card {
+                padding: 1.5rem;
+            }
+
+            .btn-cta {
+                padding: 1rem 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <p>Redirigiendo a tu idioma preferido...</p>
-    <p><a href="/es/">Español</a> | <a href="/en/">English</a></p>
-</body>
-</html>
-```
+    <!-- Shadow Overlay -->
+    <div class="shadow-overlay" id="shadowOverlay"></div>
 
-### 4. Crear /es/index.html (página principal)
+    <header>
+        <nav class="container">
+            <div class="logo">Lluis Navarro</div>
+            <ul class="nav-center">
+                <li><a href="#about">Sobre Mí</a></li>
+                <li><a href="#experience">Experiencia</a></li>
+                <li><a href="#skills">Habilidades</a></li>
+                <li><a href="#forms">Contacto</a></li>
+            </ul>
+            
+            <!-- Flag Selector -->
+            <div class="flag-selector">
+                <button class="flag-toggle" id="flagToggle">
+                    <div class="current-flag" id="currentFlag">🇪🇸</div>
+                </button>
+                
+                <div class="flag-dropdown" id="flagDropdown">
+                    <button class="flag-option" data-flag="🇪🇸" data-lang="es">
+                        <span class="flag-emoji">🇪🇸</span>
+                        <span class="flag-name">Español</span>
+                    </button>
+                    <button class="flag-option" data-flag="🇬🇧" data-lang="en">
+                        <span class="flag-emoji">🇬🇧</span>
+                        <span class="flag-name">English</span>
+                    </button>
+                    <button class="flag-option" data-flag="🏴󠁥󠁳󠁶󠁣󠁿" data-lang="ca">
+                        <span class="flag-emoji">🏴󠁥󠁳󠁶󠁣󠁿</span>
+                        <span class="flag-name">Català</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-```html
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Sitio Web</title>
-</head>
-<body>
-    <nav>
-        <a href="/es/">Inicio</a>
-        <a href="/en/">English</a>
-    </nav>
-    
-    <h1>Bienvenido a mi sitio web</h1>
-    <p>Esta es la página principal en español.</p>
-</body>
-</html>
-```
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Lluis Navarro Rico</h1>
+                <p class="hero-subtitle">Economista × Matemático × Entusiasta de la Tecnología</p>
+                <p class="hero-description">
+                    Graduado en doble titulación de Economía y Administración de Empresas por la Universidad de Aberystwyth, Reino Unido. 
+                    Actualmente cursando un Máster en Economía Cuantitativa. Apasionado por la tecnología blockchain, 
+                    el análisis financiero y la intersección entre las matemáticas y la innovación digital.
+                </p>
+                <div class="contact-info">
+                    <p>📍 Alicante, España | 📞 673369138 | 📧 <a href="mailto:lluis.uk@gmail.com">lluis.uk@gmail.com</a> | 
+                    💼 <a href="https://linkedin.com/in/lluis-econ" target="_blank">LinkedIn</a></p>
+                </div>
+                
+                <div class="cta-section">
+                    <a href="mailto:lluis.uk@gmail.com?subject=Oportunidad de Negocio - Trabajemos Juntos" class="btn-cta">
+                        🚀 ¿Listo para Trabajar Juntos?
+                    </a>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                        Disponible para consultoría, asociaciones y proyectos innovadores
+                    </p>
+                </div>
+            </div>
+        </section>
 
-### 5. Crear /en/index.html
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <h2>Sobre Mí</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: #555;">
+                    Soy un economista cuantitativo con una sólida formación matemática y una pasión por las tecnologías emergentes. 
+                    Mi experiencia abarca desde consultoría financiera y operaciones de marketing hasta instrucción de ajedrez y marketing digital. 
+                    Combino rigor analítico con resolución creativa de problemas, siempre buscando soluciones innovadoras en la intersección 
+                    de la economía, las matemáticas y la tecnología.
+                </p>
+            </div>
+        </section>
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-</head>
-<body>
-    <nav>
-        <a href="/en/">Home</a>
-        <a href="/es/">Español</a>
-    </nav>
-    
-    <h1>Welcome to my website</h1>
-    <p>This is the main page in English.</p>
-</body>
-</html>
-```
+        <!-- Experience Section -->
+        <section id="experience">
+            <div class="container">
+                <h2>Experiencia Profesional</h2>
+                <div class="experience-grid">
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <div>
+                                <div class="company">Latinos Restaurant</div>
+                                <div class="role">Operaciones de Marketing</div>
+                            </div>
+                            <div class="date-location">
+                                Sep 2022 - Presente<br>
+                                Alicante, España
+                            </div>
+                        </div>
+                        <ul class="achievements">
+                            <li>Aseguré asociaciones exclusivas con 3 organizadores locales, posicionando la marca ante 300+ consumidores objetivo</li>
+                            <li>Implementé degustaciones y promociones exclusivas, logrando una tasa de conversión del 25% de asistentes a clientes recurrentes</li>
+                            <li>Generé ventas directas medibles a través de cupones QR con ROI comprobado en campañas iniciales</li>
+                        </ul>
+                    </div>
 
-## Comandos Git para subir:
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <div>
+                                <div class="company">NobleMarron Cantera de Mármol</div>
+                                <div class="role">Consultor Financiero</div>
+                            </div>
+                            <div class="date-location">
+                                Nov 2023 - Abr 2024<br>
+                                Jumilla, España
+                            </div>
+                        </div>
+                        <ul class="achievements">
+                            <li>Desarrollé un informe integral de salud financiera de 64 páginas cubriendo el análisis completo de la empresa</li>
+                            <li>Realicé análisis EBITDA con modelado de escenarios de 3-5 años incluyendo flujos de caja y evaluación de riesgos</li>
+                            <li>Diseñé estrategia de RSC alineada con los Objetivos de Desarrollo Sostenible de la ONU</li>
+                            <li>Creé materiales comerciales de alto impacto para la adquisición de inversores y socios estratégicos</li>
+                        </ul>
+                    </div>
 
-```bash
-# Clonar tu repositorio o inicializar
-git clone https://github.com/tu-usuario/tu-repositorio.git
-cd tu-repositorio
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <div>
+                                <div class="company">Enric Valor</div>
+                                <div class="role">Instructor de Ajedrez (Online y Presencial)</div>
+                            </div>
+                            <div class="date-location">
+                                Oct 2018 - Jun 2022<br>
+                                Alicante, España
+                            </div>
+                        </div>
+                        <ul class="achievements">
+                            <li>Construí una audiencia comprometida para clases de ajedrez, resultando en un notable aumento de la demanda y participación</li>
+                            <li>Logré una tasa de retención de estudiantes del 80% a través de instrucción personalizada para diversos grupos de edad</li>
+                            <li>Organicé torneos con 50-100 participantes, fomentando un ambiente de aprendizaje competitivo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-# Crear la estructura de archivos
-mkdir es en assets
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="container">
+                <h2>Habilidades y Experiencia</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>Habilidades Técnicas</h4>
+                        <ul class="skill-list">
+                            <li>Análisis y Modelado Financiero</li>
+                            <li>Análisis EBITDA y Flujo de Caja</li>
+                            <li>Análisis Estadístico</li>
+                            <li>Visualización de Datos</li>
+                            <li>Microsoft Office Suite</li>
+                            <li>Marketing Digital</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Áreas de Interés</h4>
+                        <ul class="skill-list">
+                            <li>Tecnología Blockchain</li>
+                            <li>Economía Cuantitativa</li>
+                            <li>Innovación Fintech</li>
+                            <li>Desarrollo Sostenible</li>
+                            <li>Análisis de Mercado</li>
+                            <li>IA y Automatización</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category certifications">
+                        <h4>Certificaciones</h4>
+                        <ul class="skill-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                            <li>Microsoft Office Certificado</li>
+                            <li>Google Marketing Digital</li>
+                            <li>Certificado META Big Data</li>
+                            <li>Análisis Financiero Avanzado</li>
+                            <li>Gestión de Proyectos</li>
+                            <li>Consultoría Estratégica</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-# Añadir archivos
-git add .
-git commit -m "Initial multilingual site structure"
-git push origin main
-```
+        <!-- Forms Section -->
+        <section id="forms">
+            <div class="container">
+                <h2>Conectemos</h2>
+                <div class="forms-grid">
+                    <div class="form-card">
+                        <h4>💼 Para Negocios</h4>
+                        <p>¿Buscas soluciones empresariales en blockchain, fintech o análisis económico? Hablemos de oportunidades.</p>
+                        <a href="mailto:lluis.uk@gmail.com?subject=Oportunidad de Negocio" class="btn">Contactar</a>
+                    </div>
+                    <div class="form-card">
+                        <h4>🚀 Oportunidades Profesionales</h4>
+                        <p>¿Buscas un economista cuantitativo con pasión por la tecnología? Discutamos posibilidades.</p>
+                        <a href="mailto:lluis.uk@gmail.com?subject=Oportunidad Laboral" class="btn">Escribir</a>
+                    </div>
+                    <div class="form-card">
+                        <h4>🎯 Consultoría</h4>
+                        <p>¿Necesitas análisis financiero, investigación de mercado o experiencia en planificación estratégica?</p>
+                        <a href="mailto:lluis.uk@gmail.com?subject=Consulta de Consultoría" class="btn">Saber Más</a>
+                    </div>
+                    <div class="form-card">
+                        <h4>☕ Charla Informal</h4>
+                        <p>¿Quieres hablar de economía, blockchain o simplemente tener una conversación amigable?</p>
+                        <a href="mailto:lluis.uk@gmail.com?subject=Solicitud de Charla" class="btn">Quedar</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-## URLs resultantes:
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Lluis Navarro Rico. Todos los derechos reservados.</p>
+            <p>Economista × Matemático × Entusiasta de la Tecnología</p>
+        </div>
+    </footer>
 
-- **Sitio principal**: `https://tu-usuario.github.io/tu-repositorio/`
-- **Versión española**: `https://tu-usuario.github.io/tu-repositorio/es/`
-- **Versión inglesa**: `https://tu-usuario.github.io/tu-repositorio/en/`
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
 
-## Consejos adicionales:
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(15px)';
+            } else {
+                header.style.background = '#fff';
+                header.style.backdropFilter = 'blur(10px)';
+            }
+        });
 
-1. **Configuración Jekyll** (_config.yml):
-```yaml
-title: Mi Sitio Web
-description: Sitio web multiidioma
-baseurl: "/tu-repositorio"
-url: "https://tu-usuario.github.io"
+        // Flag selector functionality
+        const flagToggle = document.getElementById('flagToggle');
+        const flagDropdown = document.getElementById('flagDropdown');
+        const shadowOverlay = document.getElementById('shadowOverlay');
+        const currentFlag = document.getElementById('currentFlag');
+        const flagOptions = document.querySelectorAll('.flag-option');
 
-plugins:
-  - jekyll-sitemap
-  - jekyll-feed
-```
+        let isDropdownOpen = false;
 
-2. **Para sitio personal principal**: Si usas `tu-usuario.github.io` como nombre del repositorio, no necesitas `/tu-repositorio/` en las URLs.
+        function openDropdown() {
+            isDropdownOpen = true;
+            flagDropdown.classList.add('active');
+            shadowOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-3. **Navegación consistente**: Mantén enlaces de cambio de idioma en todas las páginas.
+        function closeDropdown() {
+            isDropdownOpen = false;
+            flagDropdown.classList.remove('active');
+            shadowOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
-4. **SEO multiidioma**: Usa etiquetas `hreflang` para mejor SEO:
-```html
-<link rel="alternate" hreflang="es" href="/es/" />
-<link rel="alternate" hreflang="en" href="/en/" />
-```
+        // Toggle dropdown on flag button click
+        flagToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isDropdownOpen) {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
+        });
+
+        // Close dropdown when clicking on shadow overlay
+        shadowOverlay.addEventListener('click', closeDropdown);
+
+        // Handle flag selection
+        flagOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const selectedFlag = this.getAttribute('data-flag');
+                const selectedLang = this.getAttribute('data-lang');
+                
+                // Update current flag display
+                currentFlag.textContent = selectedFlag;
+                
+                // Redirect to different pages based on language
+                if (selectedLang === 'es') {
+                    // Already on Spanish page
+                    return;
+                } else if (selectedLang === 'en') {
+                    window.location.href = 'index.html';
+                } else if (selectedLang === 'ca') {
+                    window.location.href = 'index-ca.html';
+                }
+                
+                // Close dropdown with animation
+                closeDropdown();
+                
+                // Optional: Store language preference
+                localStorage.setItem('preferred-language', selectedLang);
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('
