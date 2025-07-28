@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lluis Navarro - Economist and Mathematician</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            color: #333;
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .nav-center {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        .nav-center a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            background: rgba(0,0,0,0.05);
+        }
+
+        .nav-center a:hover {
+            background: #000;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Flag Selector */
+        .flag-selector {
+            position: relative;
+        }
+
+        .flag-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.8rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            background: rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flag-toggle:hover {
+            background: rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .current-flag {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            overflow: hidden;
+        }
+
+        .flag-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0,0,0,0.05);
+            min-width: 180px;
+            overflow: hidden;
+        }
+
+        .flag-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .flag-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .flag-option:hover {
+            background: rgba(0,0,0,0.05);
+            transform: translateX(5px);
+        }
+
+        .flag-option:first-child:hover {
+            border-radius: 15px 15px 0 0;
+        }
+
+        .flag-option:last-child:hover {
+            border-radius: 0 0 15px 15px;
+        }
+
+        .flag-emoji {
+            font-size: 18px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.02);
+        }
+
+        .flag-name {
+            font-weight: 500;
+        }
+
+        /* Shadow Dissipation Effect */
+        .shadow-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            z-index: 999;
+            backdrop-filter: blur(2px);
+        }
+
+        .shadow-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 100px;
+        }
+
+        section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 0 4rem 0;
+            background: linear-gradient(135deg, #f8f8f8 0%, #fff 100%);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: #555;
+        }
+
+        .contact-info {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 4rem;
+        }
+
+        .contact-info a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* About Section - Reduced padding */
+        #about {
+            padding: 2.5rem 0;
+        }
+
+        /* Experience Cards */
+        .experience-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .experience-card {
+            border: 1px solid #eee;
+            padding: 2rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .experience-card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .company {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .role {
+            color: #666;
+            font-style: italic;
+        }
+
+        .date-location {
+            text-align: right;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .achievements {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .achievements li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .achievements li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #000;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category.certifications {
+            grid-column: 1 / -1;
+        }
+
+        .skill-category {
+            border: 1px solid #eee;
+            padding: 1.5rem;
+            border-radius: 20px;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .skill-category h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.3rem 0;
+            color: #555;
+        }
+
+        /* Forms Section - Modified for 2 blocks */
+        .forms-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .form-block {
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            padding: 2.5rem;
+            border-radius: 25px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .form-block:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .form-block h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-cards {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-card {
+            border: 1px solid #eee;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .form-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .form-card h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .form-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            background: #000;
+            color: #fff;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        /* CTA Button */
+        .btn-cta {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: #fff;
+            padding: 1.5rem 3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s ease;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            background: linear-gradient(135deg, #333 0%, #000 100%);
+        }
+
+        .btn-cta:hover::before {
+            left: 100%;
+        }
+
+        /* Footer */
+        footer {
+            background: #f8f9fa;
+            color: #333;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid #eee;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-center {
+                gap: 0.5rem;
+            }
+
+            .nav-center a {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .experience-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .date-location {
+                text-align: left;
+            }
+
+            .flag-dropdown {
+                right: -20px;
+            }
+
+            /* Mobile-friendly skills grid */
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .skill-category.certifications {
+                grid-column: 1;
+            }
+
+            .skill-category.certifications .skill-list {
+                grid-template-columns: 1fr;
+            }
+
+            /* Mobile-friendly forms grid */
+            .forms-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            /* Adjust hero section for mobile */
+            .hero {
+                padding: 4rem 0 3rem 0;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+                margin: 0 auto 2rem;
+            }
+
+            .contact-info {
+                font-size: 0.9rem;
+                margin-bottom: 3rem;
+            }
+
+            .btn-cta {
+                padding: 1.2rem 2rem;
+                font-size: 1rem;
+            }
+
+            /* Better mobile navigation */
+            .nav-center {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .nav-center a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+            }
+
+            .experience-card,
+            .skill-category,
+            .form-card {
+                padding: 1.5rem;
+            }
+
+            .btn-cta {
+                padding: 1rem 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Shadow Overlay -->
+    <div class="shadow-overlay" id="shadowOverlay"></div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">Lluis Navarro</div>
+            <ul class="nav-center">
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#forms">Contact</a></li>
+            </ul>
+            
+            <!-- Flag Selector -->
+            <div class="flag-selector">
+                <button class="flag-toggle" id="flagToggle">
+                    <div class="current-flag" id="currentFlag">🇬🇧</div>
+                </button>
+                
+                <div class="flag-dropdown" id="flagDropdown">
+                    <button class="flag-option" data-flag="🇪🇸" data-lang="es">
+                        <span class="flag-emoji">🇪🇸</span>
+                        <span class="flag-name">Español</span>
+                    </button>
+                    <button class="flag-option" data-flag="🇬🇧" data-lang="en">
+                        <span class="flag-emoji">🇬🇧</span>
+                        <span class="flag-name">English</span>
+                    </button>
+                    <button class="flag-option" data-flag="🏴󠁥󠁳󠁶󠁣󠁿" data-lang="ca">
+                        <span class="flag-emoji">🏴󠁥󠁳󠁶󠁣󠁿</span>
+                        <span class="flag-name">Català</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Lluis Navarro Rico</h1>
+                <p class="hero-subtitle">Economist × Mathematician × Technology Enthusiast</p>
+                <p class="hero-description">
+                    Graduated with a joint degree in Economics and Business Administration from the University of Aberystwyth, United Kingdom. 
+                    Currently pursuing a Master's in Quantitative Economics. Passionate about blockchain technology, 
+                    financial analysis, and the intersection between mathematics and digital innovation.
+                </p>
+                <div class="contact-info">
+                    <p>📍 Alicante, Spain | 📞 673369138 | 📧 <a href="mailto:lluis.uk@gmail.com">lluis.uk@gmail.com</a> | 
+                    💼 <a href="https://linkedin.com/in/lluis-econ" target="_blank">LinkedIn</a></p>
+                </div>
+                
+                <div class="cta-section">
+                    <a href="mailto:lluis.uk@gmail.com?subject=Business Opportunity - Let's Work Together" class="btn-cta">
+                        🚀 Ready to Work Together?
+                    </a>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                        Available for consulting, partnerships, and innovative projects
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <h2>About Me</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: #555;">
+                    I am a quantitative economist with a solid mathematical background and a passion for emerging technologies. 
+                    My experience spans from financial consulting and marketing operations to chess instruction and digital marketing. 
+                    I combine analytical rigor with creative problem-solving, always seeking innovative solutions at the intersection 
+                    of economics, mathematics, and technology.
+                </p>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience">
+            <div class="container">
+                <h2>Professional Experience</h2>
+                <div class="experience-grid">
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <div>
+                                <div class="company">Latinos Restaurant</div>
+                                <div class="role">Marketing Operations</div>
+                            </div>
+                            <div class="date-location">
+                                Sep 2022 - Present<br>
+                                Alicante, Spain
+                            </div>
+                        </div>
+                        <ul class="achievements">
+                            <li>Secured exclusive partnerships with 3 local organizers, positioning the brand to 300+ target consumers</li>
+                            <li>Implemented exclusive tastings and promotions, achieving a 25% conversion rate from attendees to recurring customers</li>
+                            <li>Generated measurable direct sales through QR coupons with proven ROI in initial campaigns</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <div>
+                                <div class="company">NobleMarron Marble Quarry</div>
+                                <div class="role">Financial Consultant</div>
+                            </div>
+                            <div class="date-location">
+                                Nov 2023 - Apr 2024<br>
+                                Jumilla, Spain
+                            </div>
+                        </div>
+                        <ul class="achievements">
+                            <li>Developed a comprehensive 64-page financial health report covering complete company analysis</li>
+                            <li>Conducted EBITDA analysis with 3-5 year scenario modeling including cash flows and risk assessment</li>
+                            <li>Designed CSR strategy aligned with UN Sustainable Development Goals</li>
+                            <li>Created high-impact commercial materials for investor acquisition and strategic partnerships</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <div>
+                                <div class="company">Enric Valor</div>
+                                <div class="role">Chess Instructor (Online and In-Person)</div>
+                            </div>
+                            <div class="date-location">
+                                Oct 2018 - Jun 2022<br>
+                                Alicante, Spain
+                            </div>
+                        </div>
+                        <ul class="achievements">
+                            <li>Built an engaged audience for chess classes, resulting in notable increased demand and participation</li>
+                            <li>Achieved 80% student retention rate through personalized instruction for diverse age groups</li>
+                            <li>Organized tournaments with 50-100 participants, fostering a competitive learning environment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="container">
+                <h2>Skills and Expertise</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>Technical Skills</h4>
+                        <ul class="skill-list">
+                            <li>Financial Analysis and Modeling</li>
+                            <li>EBITDA and Cash Flow Analysis</li>
+                            <li>Statistical Analysis</li>
+                            <li>Data Visualization</li>
+                            <li>Microsoft Office Suite</li>
+                            <li>Digital Marketing</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Areas of Interest</h4>
+                        <ul class="skill-list">
+                            <li>Blockchain Technology</li>
+                            <li>Quantitative Economics</li>
+                            <li>Fintech Innovation</li>
+                            <li>Sustainable Development</li>
+                            <li>Market Analysis</li>
+                            <li>AI and Automation</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category certifications">
+                        <h4>Certifications</h4>
+                        <ul class="skill-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                            <li>Microsoft Office Certified</li>
+                            <li>Google Digital Marketing</li>
+                            <li>META Big Data Certificate</li>
+                            <li>Advanced Financial Analysis</li>
+                            <li>Project Management</li>
+                            <li>Strategic Consulting</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Forms Section - Modified with 2 blocks -->
+        <section id="forms">
+            <div class="container">
+                <h2>Let's Connect</h2>
+                <div class="forms-grid">
+                    <!-- Business & Professional Block -->
+                    <div class="form-block">
+                        <h3>🚀 Professional Opportunities</h3>
+                        <div class="form-cards">
+                            <div class="form-card">
+                                <h4>💼 For Business</h4>
+                                <p>Looking for enterprise solutions in blockchain, fintech, or economic analysis? Let's discuss opportunities.</p>
+                                <a href="business-contact-en.html" class="btn">Contact</a>
+                            </div>
+                            <div class="form-card">
+                                <h4>🎯 Consulting</h4>
+                                <p>Need financial analysis, market research, or strategic planning expertise?</p>
+                                <a href="consulting-contact-en.html" class="btn">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal & Casual Block -->
+                    <div class="form-block">
+                        <h3>🤝 Personal Connections</h3>
+                        <div class="form-cards">
+                            <div class="form-card">
+                                <h4>💼 Career Opportunities</h4>
+                                <p>Looking for a quantitative economist with a passion for technology? Let's discuss possibilities.</p>
+                                <a href="career-contact-en.html" class="btn">Write</a>
+                            </div>
+                            <div class="form-card">
+                                <h4>☕ Casual Chat</h4>
+                                <p>Want to talk about economics, blockchain, or just have a friendly conversation?</p>
+                                <a href="casual-contact-en.html" class="btn">Meet Up</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Lluis Navarro Rico. All rights reserved.</p>
+            <p>Economist × Mathematician × Technology Enthusiast</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(15px)';
+            } else {
+                header.style.background = '#fff';
+                header.style.backdropFilter = 'blur(10px)';
+            }
+        });
+
+        // Flag selector functionality - Modified for page redirection
+        const flagToggle = document.getElementById('flagToggle');
+        const flagDropdown = document.getElementById('flagDropdown');
+        const shadowOverlay = document.getElementById('shadowOverlay');
+        const currentFlag = document.getElementById('currentFlag');
+        const flagOptions = document.querySelectorAll('.flag-option');
+
+        let isDropdownOpen = false;
+
+        function openDropdown() {
+            isDropdownOpen = true;
+            flagDropdown.classList.add('active');
+            shadowOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDropdown() {
+            isDropdownOpen = false;
+            flagDropdown.classList.remove('active');
+            shadowOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Toggle dropdown on flag button click
+        flagToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isDropdownOpen) {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
+        });
+
+        // Close dropdown when clicking on shadow overlay
+        shadowOverlay.addEventListener('click', closeDropdown);
+
+        // Handle flag selection with actual page redirection
+        flagOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const selectedFlag = this.getAttribute('data-flag');
+                const selectedLang = this.getAttribute('data-lang');
+                
+                // Update current flag display
+                currentFlag.textContent = selectedFlag;
+                
+                // Redirect to different pages based on language
+                if (selectedLang === 'es') {
+                    window.location.href = 'index-es.html';
+                } else if (selectedLang === 'en') {
+                    // Already on English page
+                    return;
+                } else if (selectedLang === 'ca') {
+                    window.location.href = 'index-ca.html';
+                }
+                
+                // Close dropdown with animation
+                closeDropdown();
+                
+                // Optional: Store language preference
+                localStorage.setItem('preferred-language', selectedLang);
+            });
+        });
