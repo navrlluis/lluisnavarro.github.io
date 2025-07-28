@@ -368,18 +368,45 @@
             color: #555;
         }
 
-        /* Forms Section */
+        /* Forms Section - Modified for 2 blocks */
         .forms-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
             margin-top: 2rem;
+        }
+
+        .form-block {
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            padding: 2.5rem;
+            border-radius: 25px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .form-block:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .form-block h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-cards {
+            display: grid;
+            gap: 1.5rem;
         }
 
         .form-card {
             border: 1px solid #eee;
-            padding: 2rem;
-            border-radius: 20px;
+            padding: 1.5rem;
+            border-radius: 15px;
             text-align: center;
             background: #fff;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
@@ -387,38 +414,41 @@
         }
 
         .form-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
 
         .form-card h4 {
             margin-bottom: 1rem;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            color: #333;
         }
 
         .form-card p {
             color: #666;
             margin-bottom: 1.5rem;
+            font-size: 0.95rem;
         }
 
         .btn {
             background: #000;
             color: #fff;
-            padding: 1rem 2rem;
+            padding: 0.8rem 1.8rem;
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
             transition: all 0.3s ease;
             font-weight: 500;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
         }
 
         .btn:hover {
             background: #333;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
 
         /* CTA Button */
@@ -514,7 +544,7 @@
             /* Mobile-friendly forms grid */
             .forms-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 2rem;
             }
 
             /* Adjust hero section for mobile */
@@ -762,30 +792,43 @@
             </div>
         </section>
 
-        <!-- Forms Section -->
+        <!-- Forms Section - Modified with 2 blocks -->
         <section id="forms">
             <div class="container">
                 <h2>Conectemos</h2>
                 <div class="forms-grid">
-                    <div class="form-card">
-                        <h4>💼 Para Negocios</h4>
-                        <p>¿Buscas soluciones empresariales en blockchain, fintech o análisis económico? Hablemos de oportunidades.</p>
-                        <a href="mailto:lluis.uk@gmail.com?subject=Oportunidad de Negocio" class="btn">Contactar</a>
+                    <!-- Business & Professional Block -->
+                    <div class="form-block">
+                        <h3>🚀 Oportunidades Profesionales</h3>
+                        <div class="form-cards">
+                            <div class="form-card">
+                                <h4>💼 Para Negocios</h4>
+                                <p>¿Buscas soluciones empresariales en blockchain, fintech o análisis económico? Hablemos de oportunidades.</p>
+                                <a href="business-contact.html" class="btn">Contactar</a>
+                            </div>
+                            <div class="form-card">
+                                <h4>🎯 Consultoría</h4>
+                                <p>¿Necesitas análisis financiero, investigación de mercado o experiencia en planificación estratégica?</p>
+                                <a href="consulting-contact.html" class="btn">Saber Más</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-card">
-                        <h4>🚀 Oportunidades Profesionales</h4>
-                        <p>¿Buscas un economista cuantitativo con pasión por la tecnología? Discutamos posibilidades.</p>
-                        <a href="mailto:lluis.uk@gmail.com?subject=Oportunidad Laboral" class="btn">Escribir</a>
-                    </div>
-                    <div class="form-card">
-                        <h4>🎯 Consultoría</h4>
-                        <p>¿Necesitas análisis financiero, investigación de mercado o experiencia en planificación estratégica?</p>
-                        <a href="mailto:lluis.uk@gmail.com?subject=Consulta de Consultoría" class="btn">Saber Más</a>
-                    </div>
-                    <div class="form-card">
-                        <h4>☕ Charla Informal</h4>
-                        <p>¿Quieres hablar de economía, blockchain o simplemente tener una conversación amigable?</p>
-                        <a href="mailto:lluis.uk@gmail.com?subject=Solicitud de Charla" class="btn">Quedar</a>
+
+                    <!-- Personal & Casual Block -->
+                    <div class="form-block">
+                        <h3>🤝 Conexiones Personales</h3>
+                        <div class="form-cards">
+                            <div class="form-card">
+                                <h4>💼 Oportunidades Laborales</h4>
+                                <p>¿Buscas un economista cuantitativo con pasión por la tecnología? Discutamos posibilidades.</p>
+                                <a href="career-contact.html" class="btn">Escribir</a>
+                            </div>
+                            <div class="form-card">
+                                <h4>☕ Charla Informal</h4>
+                                <p>¿Quieres hablar de economía, blockchain o simplemente tener una conversación amigable?</p>
+                                <a href="casual-contact.html" class="btn">Quedar</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -823,68 +866,6 @@
             }
         });
 
-        // Flag selector functionality
+        // Flag selector functionality - Modified for page redirection
         const flagToggle = document.getElementById('flagToggle');
-        const flagDropdown = document.getElementById('flagDropdown');
-        const shadowOverlay = document.getElementById('shadowOverlay');
-        const currentFlag = document.getElementById('currentFlag');
-        const flagOptions = document.querySelectorAll('.flag-option');
-
-        let isDropdownOpen = false;
-
-        function openDropdown() {
-            isDropdownOpen = true;
-            flagDropdown.classList.add('active');
-            shadowOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeDropdown() {
-            isDropdownOpen = false;
-            flagDropdown.classList.remove('active');
-            shadowOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // Toggle dropdown on flag button click
-        flagToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            if (isDropdownOpen) {
-                closeDropdown();
-            } else {
-                openDropdown();
-            }
-        });
-
-        // Close dropdown when clicking on shadow overlay
-        shadowOverlay.addEventListener('click', closeDropdown);
-
-        // Handle flag selection
-        flagOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                const selectedFlag = this.getAttribute('data-flag');
-                const selectedLang = this.getAttribute('data-lang');
-                
-                // Update current flag display
-                currentFlag.textContent = selectedFlag;
-                
-                // Redirect to different pages based on language
-                if (selectedLang === 'es') {
-                    // Already on Spanish page
-                    return;
-                } else if (selectedLang === 'en') {
-                    window.location.href = 'index.html';
-                } else if (selectedLang === 'ca') {
-                    window.location.href = 'index-ca.html';
-                }
-                
-                // Close dropdown with animation
-                closeDropdown();
-                
-                // Optional: Store language preference
-                localStorage.setItem('preferred-language', selectedLang);
-            });
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('
+        const flagDropdown = document.getElementById('flagDropdown
